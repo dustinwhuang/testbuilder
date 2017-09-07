@@ -14,83 +14,71 @@ var detectNetwork = function(cardNumber) {
 
   // Once you've read this, go ahead and try to implement this function, then return to the console.
   // compare 2 digit prefixes
-  var formats = {
-    //2 digit prefixes
-    38000000000000:"Diner's Club",
-    39000000000000:"Diner's Club",
-    340000000000000:"American Express",
-    370000000000000:"American Express",
-    4100000000000:"Visa",
-    4100000000000000:"Visa",
-    4100000000000000000:"Visa",
-    5100000000000000:"MasterCard",
-    5200000000000000:"MasterCard",
-    5300000000000000:"MasterCard",
-    5400000000000000:"MasterCard",
-    5500000000000000:"MasterCard",
-    6500000000000000:"Discover",
-    6500000000000000000:"Discover",
+  var prefix;
+  var len = cardNumber.length;
 
-    // 3 digit prefixes
-    6440000000000000:"Discover",
-    6440000000000000000:"Discover",
-    6450000000000000: "Discover",
-    6450000000000000000:"Discover",
-    6460000000000000:"Discover",
-    6460000000000000000:"Discover",
-    6470000000000000:"Discover",
-    6470000000000000000:"Discover",
-    6480000000000000:"Discover",
-    6480000000000000000:"Discover",
-    6490000000000000:"Discover",
-    6490000000000000000:"Discover",
+  // 6 digit prefixes
+  prefix = cardNumber.slice(0, 6);
+  if (622126 <= prefix && prefix <= 622925 && 16 <= len && len <= 19)
+    return "China UnionPay";
+  if (564182 == prefix && (len === 16 || len === 18 || len === 19))
+    return "Switch";
+  if (633110 == prefix && (len === 16 || len === 18 || len === 19))
+    return "Switch";
 
-    // 4 digit prefixes
-    6011000000000000:"Discover",
-    6011000000000000000:"Discover",
-    501800000000:"Maestro",
-    5018000000000:"Maestro",
-    50180000000000:"Maestro",
-    501800000000000:"Maestro",
-    5018000000000000:"Maestro",
-    50180000000000000:"Maestro",
-    501800000000000000:"Maestro",
-    5018000000000000000:"Maestro",
-    502000000000:"Maestro",
-    5020000000000:"Maestro",
-    50200000000000:"Maestro",
-    502000000000000:"Maestro",
-    5020000000000000:"Maestro",
-    50200000000000000:"Maestro",
-    502000000000000000:"Maestro",
-    5020000000000000000:"Maestro",
-    503800000000:"Maestro",
-    5038000000000:"Maestro",
-    50380000000000:"Maestro",
-    503800000000000:"Maestro",
-    5038000000000000:"Maestro",
-    50380000000000000:"Maestro",
-    503800000000000000:"Maestro",
-    5038000000000000000:"Maestro",
-    630400000000:"Maestro",
-    6304000000000:"Maestro",
-    63040000000000:"Maestro",
-    630400000000000:"Maestro",
-    6304000000000000:"Maestro",
-    63040000000000000:"Maestro",
-    630400000000000000:"Maestro",
-    6304000000000000000:"Maestro"
-  }
+  // 4 digit prefixes
+  prefix = cardNumber.slice(0, 4);
+  if (6011 == prefix && (len === 16 || len === 19))
+    return "Discover";
+  if (5018 == prefix && 12 <= len && len <= 19)
+    return "Maestro";
+  if (5020 == prefix && 12 <= len && len <= 19)
+    return "Maestro";
+  if (5038 == prefix && 12 <= len && len <= 19)
+    return "Maestro";
+  if (6304 == prefix && 12 <= len && len <= 19)
+    return "Maestro";
+  if (6282 <= prefix && prefix <= 6288 && 16 <= len && len <= 19)
+    return "China UnionPay";
+  if (4903 == prefix && (len === 16 || len === 18 || len === 19))
+    return "Switch";
+  if (4905 == prefix && (len === 16 || len === 18 || len === 19))
+    return "Switch";
+  if (4911 == prefix && (len === 16 || len === 18 || len === 19))
+    return "Switch";
+  if (4936 == prefix && (len === 16 || len === 18 || len === 19))
+    return "Switch";
+  if (6333 == prefix && (len === 16 || len === 18 || len === 19))
+    return "Switch";
+  if (6759 == prefix && (len === 16 || len === 18 || len === 19))
+    return "Switch";
 
-  // Check 2 digit prefixes
-  if(formats[cardNumber.slice(0,2)+'0000000000000000000'.slice(2, cardNumber.length)] !== undefined)
-    return formats[cardNumber.slice(0,2)+'0000000000000000000'.slice(2, cardNumber.length)];
-  // Check 3 digit prefixes
-  if(formats[cardNumber.slice(0,3)+'0000000000000000000'.slice(3, cardNumber.length)] !== undefined)
-    return formats[cardNumber.slice(0,3)+'0000000000000000000'.slice(3, cardNumber.length)];
-  // Check 4 digit prefixes
-  if(formats[cardNumber.slice(0,4)+'0000000000000000000'.slice(4, cardNumber.length)] !== undefined)
-    return formats[cardNumber.slice(0,4)+'0000000000000000000'.slice(4, cardNumber.length)];
+  // 3 digit prefixes
+  prefix = cardNumber.slice(0, 3);
+  if (644 <= prefix && prefix <= 649 && (len === 16 || len === 19))
+    return "Discover";
+  if (624 <= prefix && prefix <= 626 && 16 <= len && len <= 19)
+    return "China UnionPay";
+
+  // 2 digit prefixes
+  prefix = cardNumber.slice(0, 2);
+  if (38 == prefix && len === 14)
+    return "Diner's Club";
+  if (39 == prefix && len === 14)
+    return "Diner's Club";
+  if (34 == prefix && len === 15)
+    return "American Express";
+  if (37 == prefix && len === 15)
+    return "American Express";
+  if (51 <= prefix && prefix <= 55 && len === 16)
+    return "MasterCard";
+  if (65 == prefix && (len === 16 || len === 19))
+    return "Discover";
+
+  // 1 digit prefixes
+  prefix = cardNumber.slice(0,1);
+  if (4 == prefix && (len === 13 || len === 16 || len === 19))
+    return "Visa";
 };
 
 
